@@ -1,5 +1,8 @@
-package com.gestion.formation.entity;
+package com.gestion.formation.controller;
 
-public class Inutile {
-    // tu peux le supprimer
+import org.springframework.security.access.annotation.Secured;
+
+@Secured("ROLE_ADMIN")
+public class AdminController {
+    
 }
