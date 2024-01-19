@@ -3,6 +3,7 @@ package com.gestion.formation.configuration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -67,13 +68,16 @@ public class SecurityConfig {
         return configuration.getAuthenticationManager();
     }
 
-    // il faut chercher comment on peut remplacer ce methode si necessaire
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(userDetailsService);
+        authProvider.setPasswordEncoder(passwordEncoder());
+        return authProvider;
+    }
+    
+    // il faut chercher comment on peux remplacer cette methode si necessaire
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("admin").password(passwordEncoder().encode("adminPass")).roles("ADMIN")
-                .and()
-                .withUser("formateur").password(passwordEncoder().encode("formateurPass")).roles("FORMATEUR")
-                .and()
-                .withUser("assistant").password(passwordEncoder().encode("assistantPass")).roles("ASSISTANT");
+        auth.authenticationProvider(authenticationProvider());
     }
 }
