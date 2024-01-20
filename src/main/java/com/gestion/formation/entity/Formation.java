@@ -37,6 +37,9 @@ public class Formation {
     @OneToMany(mappedBy = "formation")
     private List<Section> sections;
 
+    @OneToMany(mappedBy = "formation")
+    private List<Evaluation> evaluations;
+
     @ManyToMany
     @JoinTable(
         name = "formation_individu",
