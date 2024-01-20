@@ -1,28 +1,36 @@
 package com.gestion.formation.entity;
 
-import jakarta.persistence.Column;
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Entity
 @Setter
 @Getter
-@Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "roles")
-public class Role {
+public class Entreprise {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
-    @Column(length = 60)
-    private String name;
+    private String nom;
+    private String adresse;
+    private String telephone;
+    private String url;
+    private String email;
+
+    @OneToMany(mappedBy = "entreprise")
+    private List<Planification> planifications;
+    
 }
