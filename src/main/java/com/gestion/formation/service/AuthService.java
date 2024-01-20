@@ -2,6 +2,9 @@ package com.gestion.formation.service;
 
 import com.gestion.formation.dto.LoginDTO;
 import com.gestion.formation.dto.SignUpDTO;
+import com.gestion.formation.entity.Admin;
+import com.gestion.formation.entity.Assistant;
+import com.gestion.formation.entity.Formateur;
 import com.gestion.formation.entity.Role;
 import com.gestion.formation.entity.User;
 import com.gestion.formation.service.AuthService;
@@ -49,24 +52,26 @@ public class AuthService {
             return "Email is already taken!";
         }
 
-        User user = new User();
-        user.setName(signUpDto.getName());
-        user.setUsername(signUpDto.getUsername());
-        user.setEmail(signUpDto.getEmail());
-        user.setPassword(passwordEncoder.encode(signUpDto.getPassword()));
-
+        User user;
         Role role;
 
         if("ADMIN".equals(userType)) {
             role = roleRepository.findByName("ROLE_ADMIN").orElseThrow(() -> new RuntimeException("Role not found!"));
+            user= new Admin();
         } else if ("FORMATEUR".equals(userType)) {
             role = roleRepository.findByName("ROLE_FORMATEUR").orElseThrow(() -> new RuntimeException("Role not found!"));
-        } else if ("PARTICIPANT".equals(userType)) {
+            user = new Formateur();
+        } else if ("ASSISTANT".equals(userType)) {
             role = roleRepository.findByName("ROLE_ASSISTANT").orElseThrow(() -> new RuntimeException("Role not found!"));
+            user = new Assistant();
         } else {
             return "Invalid user type!";
         }
 
+        user.setName(signUpDto.getName());
+        user.setUsername(signUpDto.getUsername());
+        user.setEmail(signUpDto.getEmail());
+        user.setPassword(passwordEncoder.encode(signUpDto.getPassword()));
         user.setRoles(Collections.singleton(role));
 
         userRepository.save(user);
