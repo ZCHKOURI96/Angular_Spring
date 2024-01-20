@@ -7,6 +7,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,4 +36,12 @@ public class Formation {
 
     @OneToMany(mappedBy = "formation")
     private List<Section> sections;
+
+    @ManyToMany
+    @JoinTable(
+        name = "formation_individu",
+        joinColumns = @JoinColumn(name = "formation_id"),
+        inverseJoinColumns = @JoinColumn(name = "individu_id")
+    )
+    private List<Individu> individus;
 }

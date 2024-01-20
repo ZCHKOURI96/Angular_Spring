@@ -39,6 +39,14 @@ public class Planification {
     @JoinColumn(name = "entreprise_id")
     private Entreprise entreprise;
 
+    @ManyToOne
+    @JoinColumn(name = "admin_id")
+    private Admin admin;
+
+    @ManyToOne
+    @JoinColumn(name = "assistant_id")
+    private Assistant assistant;
+
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateDebut;
 

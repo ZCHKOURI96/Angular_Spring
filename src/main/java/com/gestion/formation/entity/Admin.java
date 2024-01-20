@@ -18,7 +18,7 @@ import lombok.Setter;
 @DiscriminatorValue("ADMIN")
 public class Admin extends User {
     
-    @OneToMany(mappedBy = "assistant")
+    @OneToMany(mappedBy = "admin")
     private List<Planification> planifications;
-    
+
 }
