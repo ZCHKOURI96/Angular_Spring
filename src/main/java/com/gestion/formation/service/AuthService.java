@@ -40,7 +40,7 @@ public class AuthService {
         return "User signed-in successfully!";
     }
 
-    public String registerUser(SignUpDTO signUpDto) {
+    public String registerUser(SignUpDTO signUpDto, String userType) {
         if (userRepository.existsByUsername(signUpDto.getUsername())) {
             return "Username is already taken!";
         }
@@ -55,8 +55,19 @@ public class AuthService {
         user.setEmail(signUpDto.getEmail());
         user.setPassword(passwordEncoder.encode(signUpDto.getPassword()));
 
-        Role roles = roleRepository.findByName("ROLE_ADMIN").get();
-        user.setRoles(Collections.singleton(roles));
+        Role role;
+
+        if("ADMIN".equals(userType)) {
+            role = roleRepository.findByName("ROLE_ADMIN").orElseThrow(() -> new RuntimeException("Role not found!"));
+        } else if ("FORMATEUR".equals(userType)) {
+            role = roleRepository.findByName("ROLE_FORMATEUR").orElseThrow(() -> new RuntimeException("Role not found!"));
+        } else if ("PARTICIPANT".equals(userType)) {
+            role = roleRepository.findByName("ROLE_ASSISTANT").orElseThrow(() -> new RuntimeException("Role not found!"));
+        } else {
+            return "Invalid user type!";
+        }
+
+        user.setRoles(Collections.singleton(role));
 
         userRepository.save(user);
 
