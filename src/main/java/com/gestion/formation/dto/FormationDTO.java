@@ -1,11 +1,11 @@
 package com.gestion.formation.dto;
 
+import java.util.List;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
-
-import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
