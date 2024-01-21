@@ -2,6 +2,9 @@ package com.gestion.formation.entity;
 
 import java.util.List;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,8 +30,13 @@ public class Formation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Le champ 'titre' de la formation est requis")
     private String titre;
+
+    @Positive(message = "Le nombre d'heures doit être un nombre positif")
     private int nombreHeures;
+
+    @Positive(message = "Le coût doit être un nombre positif")
     private double cout;
 
     @OneToMany(mappedBy = "formation")

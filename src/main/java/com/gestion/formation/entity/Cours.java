@@ -1,5 +1,8 @@
 package com.gestion.formation.entity;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,8 +25,11 @@ public class Cours {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank(message = "Le champ 'title' est requis")
     private String title;
 
+    @NotNull(message = "La section du cours ne peut pas être nulle")
     @ManyToOne
     @JoinColumn(name = "section_id")
     private Section section;

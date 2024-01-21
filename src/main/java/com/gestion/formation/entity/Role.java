@@ -1,6 +1,8 @@
 package com.gestion.formation.entity;
 
-import jakarta.persistence.Column;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,6 +25,7 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(length = 60)
+    @NotBlank(message = "Le champ 'name' est requis")
+    @Size(max = 60, message = "La longueur maximale du champ 'name' est de 60 caractères")
     private String name;
 }

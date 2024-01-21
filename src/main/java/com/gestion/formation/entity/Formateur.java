@@ -3,6 +3,8 @@ package com.gestion.formation.entity;
 import java.util.List;
 import java.util.Set;
 
+import javax.validation.constraints.NotEmpty;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
@@ -22,6 +24,7 @@ import lombok.Setter;
 @DiscriminatorValue("formateur")
 public class Formateur extends User {
 
+    @NotEmpty(message = "La liste des compétences ne peut pas être vide")
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(
         name = "formateur_competences",
@@ -30,6 +33,7 @@ public class Formateur extends User {
     )
     private Set<Competence> competences;
 
+    @NotEmpty(message = "La liste des planifications ne peut pas être vide")
     @OneToMany(mappedBy = "formateur")
     private List<Planification> planifications;
 
