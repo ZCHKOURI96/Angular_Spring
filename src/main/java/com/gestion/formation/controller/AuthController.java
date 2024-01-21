@@ -2,6 +2,7 @@ package com.gestion.formation.controller;
 
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
 
@@ -20,6 +21,7 @@ import com.gestion.formation.service.AuthService;
 @RestController
 @RequestMapping("/api/auth")
 @Secured("ADMIN")
+@Validated
 public class AuthController {
 
     @Autowired

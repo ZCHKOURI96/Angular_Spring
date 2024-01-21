@@ -20,6 +20,8 @@ import com.gestion.formation.repository.RoleRepository;
 
 import java.util.Collections;
 
+import javax.validation.Valid;
+
 @Service
 public class AuthService {
 
@@ -35,7 +37,7 @@ public class AuthService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public String authenticateUser(LoginDTO loginDto) {
+    public String authenticateUser(@Valid LoginDTO loginDto) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 loginDto.getUsernameOrEmail(), loginDto.getPassword()));
 
@@ -43,7 +45,7 @@ public class AuthService {
         return "User signed-in successfully!";
     }
 
-    public String registerUser(SignUpDTO signUpDto, String userType) {
+    public String registerUser(@Valid SignUpDTO signUpDto, String userType) {
         if (userRepository.existsByUsername(signUpDto.getUsername())) {
             return "Username is already taken!";
         }
