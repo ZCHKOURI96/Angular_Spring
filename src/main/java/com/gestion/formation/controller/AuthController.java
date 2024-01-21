@@ -1,6 +1,9 @@
 package com.gestion.formation.controller;
 
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.AuthenticationException;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,14 +26,22 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/signin")
-    public ResponseEntity<String> authenticateUser(@RequestBody LoginDTO loginDto){
-        String response = authService.authenticateUser(loginDto);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+    public ResponseEntity<String> authenticateUser(@Valid @RequestBody LoginDTO loginDto) {
+        try {
+            String response = authService.authenticateUser(loginDto);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (AuthenticationException e) {
+            return new ResponseEntity<>("Authentication failed", HttpStatus.UNAUTHORIZED);
+        }
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@RequestBody SignUpDTO signUpDto, String userType){
-        String response = authService.registerUser(signUpDto, userType);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+    public ResponseEntity<String> registerUser(@Valid @RequestBody SignUpDTO signUpDto, String userType) {
+        try {
+            String response = authService.registerUser(signUpDto, userType);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Registration failed", HttpStatus.BAD_REQUEST);
+        }
     }
 }
