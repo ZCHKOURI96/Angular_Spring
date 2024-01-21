@@ -2,6 +2,10 @@ package com.gestion.formation.entity;
 
 import java.util.Set;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.DiscriminatorType;
@@ -37,9 +41,19 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @NotBlank(message = "Le champ 'name' est requis")
     private String name;
+
+    @NotBlank(message = "Le champ 'username' est requis")
     private String username;
+
+    @NotBlank(message = "Le champ 'email' est requis")
+    @Email(message = "Veuillez saisir une adresse email valide")
     private String email;
+
+    @NotBlank(message = "Le champ 'password' est requis")
+    @Size(min = 8, message = "Le mot de passe doit contenir au moins 8 caractères")
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

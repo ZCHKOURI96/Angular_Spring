@@ -2,6 +2,8 @@ package com.gestion.formation.entity;
 
 import java.util.List;
 
+import javax.validation.constraints.NotBlank;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,6 +27,8 @@ public class Section {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank(message = "Le titre de la section ne peut pas être vide")
     private String title;
 
     @ManyToOne

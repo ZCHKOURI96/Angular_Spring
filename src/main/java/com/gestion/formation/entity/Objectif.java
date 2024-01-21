@@ -1,5 +1,7 @@
 package com.gestion.formation.entity;
 
+import javax.validation.constraints.NotBlank;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,6 +23,8 @@ public class Objectif {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank(message = "La description de l'objectif ne peut pas être vide")
     private String description;
 
     @ManyToOne

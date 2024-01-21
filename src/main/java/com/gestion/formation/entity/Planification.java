@@ -6,6 +6,8 @@ import jakarta.persistence.GenerationType;
 
 import java.util.Date;
 
+import javax.validation.constraints.FutureOrPresent;
+
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -40,9 +42,11 @@ public class Planification {
     private Entreprise entreprise;
 
     @Temporal(TemporalType.TIMESTAMP)
+    @FutureOrPresent(message = "La date de début doit être dans le futur ou le présent")
     private Date dateDebut;
 
     @Temporal(TemporalType.TIMESTAMP)
+    @FutureOrPresent(message = "La date de fin doit être dans le futur ou le présent")
     private Date dateFin;
 
 }
